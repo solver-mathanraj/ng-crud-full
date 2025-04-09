@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+body{
+  background-color: rgb(179,205,224)!important;
+}
+
+small{
+  color: red;
+}
+
+label{
+  color:white;
+  font-weight: bold;
+}
