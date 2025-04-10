@@ -1,23 +1,45 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  ReactiveFormsModule,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ApiService } from '../service/api.service';
-import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  imports: [ReactiveFormsModule, CommonModule,RouterLink],
+  selector: 'app-edit',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   myForm!: FormGroup;
-  constructor(private fb: FormBuilder, private apiService: ApiService) {}
+
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private dialogRef: MatDialogRef<HomeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { id: string }
+  ) {}
+
   ngOnInit(): void {
     this.myForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -25,21 +47,24 @@ export class HomeComponent implements OnInit {
       number: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
     });
+
   }
+
+
   async onSubmit() {
     if (this.myForm.valid) {
       try {
-        console.log(this.myForm.value);
-        const res = await this.apiService.postRecord(this.myForm.value);
-        console.log('--Response : ', res);
-        alert("Successfully inserted")
-        this.myForm.reset();
-      } catch (e) {
-        console.log(e);
+        await this.apiService.postRecord(this.myForm.value);
+        this.dialogRef.close(true);
+      } catch (error) {
+        console.error(error);
       }
     } else {
       this.myForm.markAllAsTouched();
-      console.log('something error da mathanu');
     }
+  }
+
+  closeModal() {
+    this.dialogRef.close(false);
   }
 }

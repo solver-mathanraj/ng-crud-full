@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <h1 class="mb-4 text-center fw-bolder">User List</h1>
   <div class="d-flex justify-content-end me-5 mb-3">
-    <button class="btn btn-success" routerLink="insert">add</button>
+    <button class="btn btn-success" (click)="openInsertDialog()">add</button>
   </div>
    <!-- Loader -->
   <div *ngIf="loading" class="text-center my-5">
@@ -32,7 +32,7 @@
         <td>{{ data.number }}</td>
         <td>{{ data.email }}</td>
         <td>
-          <button class="btn btn-primary me-2" routerLink="edit/{{ data._id }}">
+          <button class="btn btn-primary me-2" (click)="openEditDialog(data._id)" >
             Edit
           </button>
           <button (click)="deleteData(data.id)" class="btn btn-danger">
