@@ -14,7 +14,7 @@
         <th>Action</th>
       </tr>
     </thead>
-    @if(this.datas.length>0){
+    @if(datas && this.datas.length>0){
     <tbody>
       <tr *ngFor="let data of datas; let i = index">
         <td>{{ i + 1 }}</td>
@@ -32,12 +32,12 @@
         </td>
       </tr>
     </tbody>
-  }@else {
+    }@else {
     <tbody>
       <tr>
-        <td  class="text-center" colspan="6">No data found</td>
+        <td class="text-center" colspan="6">No data found</td>
       </tr>
     </tbody>
-  }
+    }
   </table>
 </div>

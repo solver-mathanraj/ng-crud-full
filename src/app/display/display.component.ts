@@ -20,16 +20,16 @@ export class DisplayComponent implements OnInit {
     try {
       const res: any = await this.apiService.getRecord();
       console.log(res);
-      this.datas = res.users;
+      this.datas = res;
     } catch (e) {
       console.log(e);
     }
   }
 
-  async deleteData(id:string) {
+  async deleteData(id: string) {
     try {
       const res: any = await this.apiService.deleteRecord(id);
-      this.ngOnInit()
+      this.ngOnInit();
       console.log(res);
     } catch (e) {
       console.log(e);
