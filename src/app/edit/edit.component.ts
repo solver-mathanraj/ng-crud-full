@@ -25,7 +25,7 @@ export class EditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.recordId = this.route.snapshot.params['id'];
+    this.recordId = this.route.snapshot.params['_id'];
   }
   ngOnInit(): void {
     this.myForm = this.fb.group({
