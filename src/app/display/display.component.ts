@@ -16,13 +16,17 @@ export class DisplayComponent implements OnInit {
     this.getData();
   }
   datas: any = [];
+  loading:boolean = true;
   async getData() {
     try {
+      this.loading = true;
       const res: any = await this.apiService.getRecord();
       console.log(res);
       this.datas = res;
     } catch (e) {
       console.log(e);
+    }finally{
+      this.loading=false
     }
   }
 
